@@ -1,0 +1,18 @@
+ANOTACIONES
+
+***************** INSTALACIONES *****************
+    1. pip install virtualenv
+        - virtualenv venv
+        - Crea una carpeta con la configuracion del proyecto actual (Crea un entorno virtual)
+        - Para activar el entorno virtual ejecutamos el siguiente codigo:  
+            - source ./venv/bin/activate
+        - Para salir del entorno virtual 
+            - deactivate
+
+    2. pip install flask pymongo
+
+    3. pip install Flask-PyMongo    
+        - Modulo de flask que tiene integrado mongodb
+
+***************** EJECUTAR APP *****************
+    - python src/app.py
