@@ -16,24 +16,24 @@ def create_user():
     #Recibiendo datos
     name = request.json['name']
     lastName = request.json['lastName']
-    document = request.json['document']
+    identification = request.json['identification']
     birthDate = request.json['birthDate']
     city = request.json['city']
-    neighboorhod = request.json['neighboorhod']
-    phoneNumber = request.json['phoneNumber']
+    neighborhood = request.json['neighborhood']
+    phone = request.json['phone']
 
     #Validacion sencilla de que estamos recibiendo los datos
-    if name and lastName and document and birthDate and city and neighboorhod and phoneNumber:
+    if name and lastName and identification and birthDate and city and neighborhood and phone:
         #Esto retorna un id
         id = mongo.db.customers.insert(
             {
                 'name' : name,
                 'lastName' : lastName,
-                'document' : document,
+                'identification' : identification,
                 'birthDate' : birthDate,
                 'city' : city,
-                'neighboorhod' : neighboorhod,
-                'phoneNumber' : phoneNumber
+                'neighborhood' : neighborhood,
+                'phone' : phone
             }
         )
         #Descripcion del nuevo dato que se ha creado
@@ -41,11 +41,11 @@ def create_user():
             'id': str(id),
             'name' : name,
             'lastName' : lastName,
-            'document' : document,
+            'identification' : identification,
             'birthDate' : birthDate,
             'city' : city,
-            'neighboorhod' : neighboorhod,
-            'phoneNumber' : phoneNumber
+            'neighborhood' : neighborhood,
+            'phone' : phone
         }
         return response
     else:
@@ -57,9 +57,11 @@ def create_user():
 @app.route('/customers', methods=['GET'])
 def get_users():
     customers = mongo.db.customers.find()
-    response = json_util.dumps(customers)
-    #Response es para que se vea como un json en vez de un String
-    return Response(response, mimetype='application/json')
+    response = {"quotesDB": customers}
+    return Response(json_util.dumps(response),  mimetype='application/json')
+    # response = json_util.dumps(customers)
+    # #Response es para que se vea como un json en vez de un String
+    # return Response(response, mimetype='application/json')
 
 #GET USER BY ID
 @app.route('/customer/<id>', methods=['GET'])
@@ -84,21 +86,21 @@ def delete_user(id):
 def update_user(id):
     name = request.json['name']
     lastName = request.json['lastName']
-    document = request.json['document']
+    identification = request.json['identification']
     birthDate = request.json['birthDate']
     city = request.json['city']
-    neighboorhod = request.json['neighboorhod']
-    phoneNumber = request.json['phoneNumber']
+    neighborhood = request.json['neighborhood']
+    phone = request.json['phone']
 
-    if name and lastName and document and birthDate and city and neighboorhod and phoneNumber:
+    if name and lastName and identification and birthDate and city and neighborhood and phone:
         mongo.db.customers.update_one({'_id': ObjectId(id)}, {'$set': {
             'name' : name,
             'lastName' : lastName,
-            'document' : document,
+            'identification' : identification,
             'birthDate' : birthDate,
             'city' : city,
-            'neighboorhod' : neighboorhod,
-            'phoneNumber' : phoneNumber
+            'neighborhood' : neighborhood,
+            'phone' : phone
         }})
         response = jsonify({
         'message': 'Customer ' + id + ' was updated successfully'
